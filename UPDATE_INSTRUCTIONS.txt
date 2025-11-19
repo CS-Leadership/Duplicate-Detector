@@ -1,0 +1,140 @@
+# 🔄 UPDATED VERSION - Better Duplicate Display Format!
+
+## What Changed?
+
+I've updated the website to show duplicates in **EXACTLY the same format** as my Claude analysis reports.
+
+### Before:
+- Just showed "Top 10 agents with highest duplicate rates"
+- Minimal details
+
+### Now:
+✅ **Agent Performance Summary Table** - Full overview with all agents ranked
+✅ **Detailed Duplicate Records** - Shows EVERY duplicate with full details:
+   - Customer name
+   - Badge showing detection type (Orphan Pattern, Both Contacts, Similar Name)
+   - Phone number(s)
+   - Email address(es)
+   - File name
+   - Excel row numbers
+   - Detection method explanation
+   - Date sent
+   - Times contacted
+
+All duplicates are **grouped by agent** just like in my reports!
+
+---
+
+## 🔄 How to Update Your GitHub Site
+
+### Option 1: Replace the Files (Easy)
+
+1. Go to your GitHub repository
+2. Click on `app.js`
+3. Click the pencil icon (Edit)
+4. Delete all content
+5. Download the new app.js file (link below)
+6. Copy and paste the new content
+7. Click "Commit changes"
+8. Repeat for `index.html`
+
+### Option 2: Delete and Re-upload (Easier)
+
+1. Go to your repository
+2. Click on `app.js` → Click trash icon → Commit
+3. Click on `index.html` → Click trash icon → Commit
+4. Click "Add file" → "Upload files"
+5. Upload the new `app.js` and `index.html`
+6. Commit changes
+
+### Option 3: Fresh Start (Easiest)
+
+1. Delete your current repository
+2. Create a new one with the same name
+3. Upload ALL files from the new ZIP
+
+---
+
+## 📥 Download Updated Files
+
+**Full Package (recommended):**
+[Download duplicate-detector-website-v2.zip](computer:///mnt/user-data/outputs/duplicate-detector-website-v2.zip)
+
+**Individual Updated Files:**
+- Updated app.js
+- Updated index.html
+
+(All other files remain the same - styles.css, duplicate-detector.js, README.md)
+
+---
+
+## ✨ What You'll See Now
+
+### 1. Agent Performance Summary Table
+```
+Rank | Agent Name        | Total Reviews | # of Duplicates | Duplicate Rate
+-----|-------------------|---------------|-----------------|----------------
+  1  | John Smith        |      150      |       12        |     8.0%
+  2  | Jane Doe          |      120      |        0        |     0.0% ✅
+```
+
+### 2. Detailed Duplicate Records
+
+For each agent with duplicates, you'll see:
+
+**Agent Name (X duplicate customers)**
+
+Each duplicate shows:
+- **Customer Name** with color-coded badge
+  - 🟡 ORPHAN PATTERN
+  - 🔴 BOTH CONTACTS
+  - 🟢 SIMILAR NAME
+- **Phone number(s)** with 📱 icon
+- **Email address(es)** with 📧 icon
+- **File name** and **Excel row numbers**
+- **Full detection explanation**
+- **Date sent** and **Times contacted**
+
+---
+
+## 🎯 This Matches Claude's Format Exactly!
+
+Now when you analyze files, you'll see the **exact same level of detail** as in my reports:
+- Every duplicate is listed individually
+- Grouped by agent
+- Full contact information visible
+- Detection method clearly labeled
+- Easy to spot orphan patterns
+
+---
+
+## 💡 After Updating
+
+Wait 2-3 minutes after uploading the new files, then:
+1. Visit your site URL
+2. Hard refresh (Ctrl+Shift+R or Cmd+Shift+R)
+3. Upload a test file
+4. Verify you see the new detailed format
+
+---
+
+## 🆘 Still Having Issues?
+
+If you're still having trouble with GitHub:
+
+**Try Netlify Instead (30 seconds):**
+1. Go to [app.netlify.com/drop](https://app.netlify.com/drop)
+2. Drag the `duplicate-detector` folder from the ZIP
+3. Done! Instant deploy with the updated format
+
+---
+
+## ✅ Confirmation
+
+You'll know it's working when you see:
+- A full table of ALL agents with their statistics
+- Detailed cards for each duplicate showing customer name, phone, email
+- Color-coded badges (Orphan Pattern, Both Contacts, Similar Name)
+- Scrollable list if there are many duplicates
+
+This is now **identical** to the format you get from Claude!
