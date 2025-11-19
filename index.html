@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Duplicate Detection Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Review Duplicate Detection Tool</h1>
+            <p class="subtitle">Upload Excel/CSV files to detect duplicate outreach patterns</p>
+        </header>
+
+        <main>
+            <!-- Upload Section -->
+            <section class="upload-section card">
+                <h2>📁 Upload Files</h2>
+                <div class="upload-area" id="uploadArea">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p class="upload-text">Drop Excel or CSV files here, or click to browse</p>
+                    <input type="file" id="fileInput" multiple accept=".xlsx,.xls,.csv" hidden>
+                    <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                        Choose Files
+                    </button>
+                </div>
+
+                <!-- File List -->
+                <div id="fileList" class="file-list"></div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="settings-section card">
+                <h2>⚙️ Detection Settings</h2>
+                
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label for="fuzzyThreshold">
+                            Fuzzy Match Threshold: <span id="fuzzyValue">80</span>%
+                        </label>
+                        <input type="range" id="fuzzyThreshold" min="50" max="100" value="80">
+                        <small>Higher = more strict matching (fewer false positives)</small>
+                    </div>
+
+                    <div class="setting-item">
+                        <label for="excludeText">Auto-exclude rows containing:</label>
+                        <input type="text" id="excludeText" placeholder="e.g., Total, Summary" value="Total">
+                        <small>Comma-separated values (case-insensitive)</small>
+                    </div>
+
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="rememberSettings" checked>
+                            Remember my settings
+                        </label>
+                    </div>
+                </div>
+
+                <details class="custom-rules">
+                    <summary>➕ Add Custom Detection Rules (Advanced)</summary>
+                    <div class="custom-rules-content">
+                        <p><em>Coming soon: Create your own detection patterns</em></p>
+                    </div>
+                </details>
+            </section>
+
+            <!-- Analyze Button -->
+            <div class="action-section">
+                <button class="btn btn-large btn-analyze" id="analyzeBtn" disabled>
+                    🔍 Analyze Files for Duplicates
+                </button>
+            </div>
+
+            <!-- Progress Section -->
+            <div id="progressSection" class="progress-section card" style="display: none;">
+                <h3>Processing...</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p id="progressText" class="progress-text"></p>
+            </div>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <!-- Summary Cards -->
+                <div class="summary-cards">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Reviews</div>
+                        <div class="stat-value" id="statTotalReviews">0</div>
+                    </div>
+                    <div class="stat-card stat-warning">
+                        <div class="stat-label">Duplicate Records</div>
+                        <div class="stat-value" id="statDuplicates">0</div>
+                        <div class="stat-percent" id="statDuplicatePercent">0%</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Unique Customers Affected</div>
+                        <div class="stat-value" id="statCustomers">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Files Analyzed</div>
+                        <div class="stat-value" id="statFiles">0</div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="card">
+                        <h3>📈 Weekly Trend</h3>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    <div class="card">
+                        <h3>🔍 Detection Methods</h3>
+                        <canvas id="methodChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Top Issues -->
+                <div class="card">
+                    <h3>⚠️ Agents with Highest Duplicate Rates</h3>
+                    <div id="topAgents"></div>
+                </div>
+
+                <!-- Download Section -->
+                <div class="download-section">
+                    <h3>📥 Download Results</h3>
+                    <div class="download-buttons">
+                        <button class="btn btn-success" id="downloadExcel">
+                            📊 Download Excel Report
+                        </button>
+                        <button class="btn btn-secondary" id="downloadPDF">
+                            📄 Download PDF Report
+                        </button>
+                        <button class="btn btn-secondary" id="downloadAllFiles">
+                            📦 Download All Analysis Files (ZIP)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Past Analyses -->
+                <div class="card">
+                    <h3>📚 Past Analyses</h3>
+                    <div id="pastAnalyses"></div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built with ❤️ for duplicate detection | Analyzing: Agent, Customer, Phone, Email, Date fields</p>
+        </footer>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="duplicate-detector.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
