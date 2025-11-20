@@ -43,27 +43,51 @@ class DuplicateDetector {
         if (data.length === 0) return {};
 
         const headers = Object.keys(data[0]);
+        console.log('All column headers found:', headers);
+        
         const columns = {};
 
         for (const header of headers) {
             const lower = header.toLowerCase();
+            const original = header.trim();
             
-            if ((lower.includes('user') && lower.includes('name')) || lower.includes('agent')) {
-                columns.agent = header;
+            // Agent/User Name
+            if (!columns.agent && ((lower.includes('user') && lower.includes('name')) || lower.includes('agent'))) {
+                columns.agent = original;
+                console.log(`✓ Agent column found: "${original}"`);
             }
-            if (lower.includes('customer') && lower.includes('name')) {
-                columns.customer = header;
+            
+            // Customer Name
+            if (!columns.customer && lower.includes('customer') && lower.includes('name')) {
+                columns.customer = original;
+                console.log(`✓ Customer column found: "${original}"`);
             }
-            if (lower.includes('phone')) {
-                columns.phone = header;
+            
+            // Phone - be very flexible
+            if (!columns.phone && (lower.includes('phone') || lower.includes('number'))) {
+                // Only accept if it's clearly a phone column
+                if (lower.includes('phone') || (lower.includes('number') && !lower.includes('count'))) {
+                    columns.phone = original;
+                    console.log(`✓ Phone column found: "${original}"`);
+                }
             }
-            if (lower.includes('email')) {
-                columns.email = header;
+            
+            // Email
+            if (!columns.email && lower.includes('email')) {
+                columns.email = original;
+                console.log(`✓ Email column found: "${original}"`);
             }
-            if (lower.includes('day') || lower.includes('date')) {
-                columns.date = header;
+            
+            // Date
+            if (!columns.date && (lower.includes('day') || lower.includes('date') || lower.includes('sent'))) {
+                if (!lower.includes('count')) {
+                    columns.date = original;
+                    console.log(`✓ Date column found: "${original}"`);
+                }
             }
         }
+
+        console.log('Final column mapping:', columns);
 
         return columns;
     }
